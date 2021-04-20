@@ -13,5 +13,7 @@ urlpatterns =[
         path('post/<int:pk>/comment/', AddCommentView.as_view(), name= 'post-comment'),
         path('post/<int:pk>/like/', views.like_post, name= 'like'),
         path('about/', views.about, name= 'blog-about'),
+        path('data/', views.data, name= 'blog-data'),
+        path('export-user/', views.export_user, name= 'export-user'),
     ]
 

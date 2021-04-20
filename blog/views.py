@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from blog.models import Post, Comment
+import xlwt
+import datetime
 
 def home(request):
     context = {
@@ -89,6 +92,37 @@ def about(request):
     return render(request,'blog/about.html',{'title':'About'})
 
 
+def data(request):
+    users=User.objects.all()
+    context={'users':users}
+    return render(request, 'blog/data.html', context)
 
 
+def export_user(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition']="attatchment; filename=User_data" + \
+            str(datetime.datetime.now()) + ".xls"
+    
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('User_data')
 
+
+    row_num = 0
+    font_style= xlwt.XFStyle()
+    font_style.bold = True
+
+    columns=['Name', 'E-mail', 'Posts']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style= xlwt.XFStyle()
+    rows = User.objects.all().values_list('username','email',)
+
+    for row in rows:
+        row_num+=1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+    wb.save(response)
+    return(response)

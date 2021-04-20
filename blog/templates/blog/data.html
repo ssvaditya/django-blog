@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<h1> Data </h1>
+
+{% if users %}
+<div class="col-md-4">
+	<a href="{% url 'export-user' %}" class="btn btn-secondary">Export Excel</a>
+<table class="ui table">
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> E-mail </th>
+			<th> Posts </th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for user in users %}
+
+		<tr>
+			<td>{{ user.username }}</td>
+			<td>{{ user.email }}</td>
+		</tr>
+		{% endfor %}
+
+
+{% endif %}
+{% endblock content %}
