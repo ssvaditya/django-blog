@@ -1,5 +1,4 @@
 {% extends "blog/base.html" %}
-{% load socialaccount %}
 {% load crispy_forms_tags %}
 {% block content %}
      <div class="content-section">
@@ -10,12 +9,17 @@
 	               {{ form|crispy }}
                  </fieldset>
 		
-		 <a href ="{% provider_login_url 'google' %}">Login with Google</a>
 
              <div class="form-group">
                     <button class="btn btn-outline-info" type="submit">Log In</div>
-	     <small class="text-muted ml-2">
+	     <div><p align = "left">
+			     <a href="http://127.0.0.1:8000/accounts/google/login">
+                             <img alt="Login with Google" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width=50" height="35">
+                  </p>
+	          <p align = "right">
+		     <small class="text-muted ml-2">
 		     <a href="{% url 'password_reset' %}">Forgot Password?</a>
+		  </p>  
 	     </form>
              <div class="border-top pt-3">
                      <small class="text-muted">

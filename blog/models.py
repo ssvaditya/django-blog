@@ -9,6 +9,11 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    
+
+    def number_of_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title
@@ -29,4 +34,5 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.post.pk})
+
 

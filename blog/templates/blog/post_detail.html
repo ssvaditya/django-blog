@@ -20,6 +20,10 @@
     <p class="article-content">{{ object.content }}</p>
     <br>
     <br>
+    <div>
+	    <a class="btn btn-secondary btn-sm mt-1 mb-1"  href="{% url 'like' object.id %}"><img src = " "  alt= "Like" height=""  width=""></a>
+	    <small class="text-muted">{{ object.likes}} likes</small>
+    </div>
     <hr>
    <div>
 	<h3>Comments...</h3>

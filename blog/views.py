@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
@@ -55,6 +55,11 @@ class AddCommentView(CreateView):
             form.instance.post_id = self.kwargs['pk']
             return super().form_valid(form)
 
+def like_post(request, pk):
+    post=get_object_or_404(Post, pk=pk)
+    post.likes+=1
+    post.save()
+    return redirect('post-detail', pk=post.pk)
         
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -82,4 +87,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request,'blog/about.html',{'title':'About'})
+
+
+
+
 
